@@ -16,7 +16,11 @@ SHELL [ "/bin/bash", "-euxo", "pipefail", "-c" ]
 RUN <<EOT
     apt-get -y update
     apt-get -y upgrade
-    apt-get -y install wget unzip clang-format make libffi7
+    if [[ "$arch" == "arm64" ]]; then
+        apt-get -y install wget unzip clang-format make libffi-dev
+    else
+        apt-get -y install wget unzip clang-format gcc-multilib make libffi7
+    fi
     apt-get -y clean
     rm -rf /var/lib/apt/lists/*
 EOT
