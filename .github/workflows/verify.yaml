@@ -42,6 +42,7 @@ jobs:
           brew install --cask docker
           brew install qemu
           brew install colima
+          brew service start colima
           colima start
 
       - name: Enable QEMU for Multi-Platform Builds
