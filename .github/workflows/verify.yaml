@@ -40,8 +40,7 @@ jobs:
       - name: Install Docker
         run: |
           brew install --cask docker
-          open --background -a Docker
-          sleep 10  # Allow Docker to start
+          brew install qemu
 
       - name: Enable QEMU for Multi-Platform Builds
         run: |
