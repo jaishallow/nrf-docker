@@ -1,8 +1,8 @@
 FROM ubuntu:22.04 as base
 WORKDIR /workdir
 
-ARG sdk_nrf_branch=v2.7-branch
-ARG toolchain_version=v2.7.0
+ARG sdk_nrf_branch=v2.6-branch
+ARG toolchain_version=v2.6.2
 ARG sdk_nrf_commit
 ARG NORDIC_COMMAND_LINE_TOOLS_VERSION="10-24-0/nrf-command-line-tools-10.24.0"
 ARG arch=amd64
@@ -16,7 +16,11 @@ SHELL [ "/bin/bash", "-euxo", "pipefail", "-c" ]
 RUN <<EOT
     apt-get -y update
     apt-get -y upgrade
-    apt-get -y install wget unzip clang-format gcc-multilib make libffi7
+    if [[ "$arch" == "arm64" ]]; then
+        apt-get -y install wget unzip clang-format make libffi-dev
+    else
+        apt-get -y install wget unzip clang-format gcc-multilib make libffi7
+    fi
     apt-get -y clean
     rm -rf /var/lib/apt/lists/*
 EOT
